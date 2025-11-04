@@ -1,5 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bkg8ncg7ccavl"]
+[gd_scene load_steps=8 format=3 uid="uid://bkg8ncg7ccavl"]
 
+[ext_resource type="PackedScene" uid="uid://bpyasutpig3lt" path="res://scenes/sub_viewport.tscn" id="2_dqkch"]
+[ext_resource type="Texture2D" uid="uid://b35m1qkp0spsl" path="res://sources/bg_lines.png" id="2_g2els"]
 [ext_resource type="Script" uid="uid://cqsjguw0jsg7l" path="res://script/fps.gd" id="2_qhqgy"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_g2els"]
@@ -10,6 +12,22 @@ height = 0.6
 radius = 0.25
 height = 0.5
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qhqgy"]
+transparency = 3
+alpha_hash_scale = 2.0
+alpha_antialiasing_mode = 0
+blend_mode = 2
+cull_mode = 1
+albedo_texture = ExtResource("2_g2els")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_operator = 1
+emission_texture = ExtResource("2_g2els")
+
+[sub_resource type="SphereMesh" id="SphereMesh_dqkch"]
+radius = 10.0
+height = 20.0
+
 [node name="player" type="CharacterBody3D"]
 
 [node name="FPS" type="Node" parent="." node_paths=PackedStringArray("charecter", "camera", "neck")]
@@ -18,12 +36,29 @@ charecter = NodePath("..")
 camera = NodePath("../neck/Camera3D")
 neck = NodePath("../neck")
 
+[node name="Node" type="Node" parent="."]
+
 [node name="neck" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="neck"]
+current = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="neck/Camera3D"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" parent="neck/Camera3D/SubViewportContainer" instance=ExtResource("2_dqkch")]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_g2els")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_qhqgy")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_qhqgy")
+mesh = SubResource("SphereMesh_dqkch")

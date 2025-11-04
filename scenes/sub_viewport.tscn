@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpyasutpig3lt"]
+
+[ext_resource type="ArrayMesh" uid="uid://ccmnu8nn4rv8f" path="res://sources/Gun1_Main.obj" id="1_wgx1d"]
+[ext_resource type="ArrayMesh" uid="uid://cxu6rt71tdpr" path="res://sources/Gun1_Screen.obj" id="2_na3wh"]
+[ext_resource type="ArrayMesh" uid="uid://8am08ancefid" path="res://sources/Gun1_Disk.obj" id="3_cos2v"]
+
+[node name="SubViewport" type="SubViewport"]
+canvas_cull_mask = 4294967294
+size = Vector2i(640, 360)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+cull_mask = 1048574
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.76476395, -0.16675986, 0.6223562, 3.0999647e-10, 0.9659258, 0.2588191, -0.6443105, -0.1979355, 0.7387053, 0.2, -0.2, -0.4)
+layers = 2
+light_color = Color(0, 1, 0, 1)
+
+[node name="Gun_1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, -0.2, -0.4)
+
+[node name="Gun1Main" type="MeshInstance3D" parent="Gun_1"]
+layers = 2
+mesh = ExtResource("1_wgx1d")
+skeleton = NodePath("../../../../..")
+
+[node name="Gun1Screen" type="MeshInstance3D" parent="Gun_1/Gun1Main"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.028414458, 0.11574188, -0.5500001)
+layers = 2
+mesh = ExtResource("2_na3wh")
+skeleton = NodePath("../..")
+
+[node name="Gun1Disk" type="MeshInstance3D" parent="Gun_1/Gun1Main"]
+transform = Transform3D(1, 0, 0, 0, 0.99900746, 0.044543505, 0, -0.044543505, 0.99900746, 0, 0.11, -0.30000004)
+layers = 2
+mesh = ExtResource("3_cos2v")
+skeleton = NodePath("../..")

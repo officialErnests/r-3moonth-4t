@@ -14,6 +14,7 @@ var mouse_prev_pos
 var intendedDir = 0
 
 func _ready() -> void:
+	camera.make_current()
 	mouse_prev_pos = get_viewport().get_mouse_position()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 

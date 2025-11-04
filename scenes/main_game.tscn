@@ -1,32 +1,24 @@
-[gd_scene load_steps=9 format=3 uid="uid://1ek36aoqqaan"]
+[gd_scene load_steps=20 format=3 uid="uid://1ek36aoqqaan"]
 
+[ext_resource type="Script" uid="uid://sd28a8j76tr1" path="res://script/camera_linker.gd" id="1_d2op2"]
 [ext_resource type="Texture2D" uid="uid://5m8jympdnn6f" path="res://temp_assets/s7.jpg" id="1_s3esy"]
 [ext_resource type="PackedScene" uid="uid://bkg8ncg7ccavl" path="res://scenes/player.tscn" id="2_72e8q"]
+[ext_resource type="ArrayMesh" uid="uid://d3b1hyk0mfsjb" path="res://sources/Level1_catus_1.obj" id="4_sp04v"]
+[ext_resource type="ArrayMesh" uid="uid://8am08ancefid" path="res://sources/Gun1_Disk.obj" id="5_ihbck"]
+[ext_resource type="ArrayMesh" uid="uid://ccmnu8nn4rv8f" path="res://sources/Gun1_Main.obj" id="6_vnsdt"]
+[ext_resource type="ArrayMesh" uid="uid://cxu6rt71tdpr" path="res://sources/Gun1_Screen.obj" id="7_ikqpi"]
+[ext_resource type="ArrayMesh" uid="uid://bvlli1xauiolp" path="res://sources/Level1_catus_2.obj" id="8_5luka"]
+[ext_resource type="ArrayMesh" uid="uid://dpj5ceko5pi71" path="res://sources/Level1_entity_1.obj" id="9_yu8cv"]
+[ext_resource type="ArrayMesh" uid="uid://c5gyssa1q6ebw" path="res://sources/Level1_entity_2.obj" id="10_ibnub"]
+[ext_resource type="ArrayMesh" uid="uid://bvljg01xdt3l1" path="res://sources/Level1_entity_3.obj" id="11_5wboo"]
+[ext_resource type="ArrayMesh" uid="uid://dbt1oeq14j58v" path="res://sources/Level1_ribs.obj" id="12_6de02"]
+[ext_resource type="ArrayMesh" uid="uid://dchjd4d0s05ce" path="res://sources/Level1_shrub.obj" id="13_cybgu"]
+[ext_resource type="ArrayMesh" uid="uid://bcy8ew32d3wm5" path="res://sources/Level1_skull.obj" id="14_wdxbp"]
+[ext_resource type="ArrayMesh" uid="uid://ce8cb3ekgbjp5" path="res://sources/Projectile_1.obj" id="15_on6n6"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_s3esy"]
-sky_top_color = Color(1, 0, 1, 1)
-sky_horizon_color = Color(0.7380415, 0.35951528, 0.7380406, 1)
-ground_bottom_color = Color(0.5142932, 0.00018814311, 0.51428956, 1)
-ground_horizon_color = Color(0.7380415, 0.35951528, 0.7380406, 1)
-
-[sub_resource type="Sky" id="Sky_72e8q"]
-sky_material = SubResource("ProceduralSkyMaterial_s3esy")
-
-[sub_resource type="Environment" id="Environment_d2op2"]
-background_mode = 2
-sky = SubResource("Sky_72e8q")
+[sub_resource type="Environment" id="Environment_0rdsr"]
+background_mode = 4
 tonemap_mode = 3
-tonemap_exposure = 0.23
-tonemap_white = 0.0
-glow_enabled = true
-glow_intensity = 1.18
-glow_strength = 0.42
-glow_bloom = 1.0
-glow_blend_mode = 0
-adjustment_enabled = true
-adjustment_brightness = 0.5
-adjustment_contrast = 2.61
-adjustment_saturation = 1.11
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_q7yvd"]
 
@@ -34,6 +26,10 @@ adjustment_saturation = 1.11
 albedo_texture = ExtResource("1_s3esy")
 metallic_specular = 0.32
 roughness = 0.25
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_operator = 1
+emission_texture = ExtResource("1_s3esy")
 clearcoat_enabled = true
 clearcoat = 0.02
 clearcoat_roughness = 1.0
@@ -44,11 +40,16 @@ size = Vector2(100, 100)
 
 [node name="game" type="Node3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_d2op2")
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." node_paths=PackedStringArray("camera")]
+environment = SubResource("Environment_0rdsr")
+script = ExtResource("1_d2op2")
+camera = NodePath("Camera3D")
+
+[node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 0.9080701, 0.4188182, 0, -0.4188182, 0.9080701, 0, 6.3706827, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.9659258, 0.066987306, -0.25000003, 0, 0.9659258, 0.25881904, 0.25881907, 0.25, -0.93301266, 0, 0, 0)
+transform = Transform3D(-0.4274842, -0.2339784, 0.8732191, 6.6800077e-09, 0.96592593, 0.2588191, -0.904023, 0.11064108, -0.41291803, 0, 0, 0)
 light_color = Color(0, 1, 0, 1)
 shadow_enabled = true
 
@@ -62,3 +63,56 @@ material_override = SubResource("StandardMaterial3D_72e8q")
 mesh = SubResource("PlaneMesh_d2op2")
 
 [node name="player" parent="." instance=ExtResource("2_72e8q")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="Level1Catus1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.570164, 0, -0.20342255)
+mesh = ExtResource("4_sp04v")
+
+[node name="Gun1Disk" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.918964, 0.01, -16.786486)
+mesh = ExtResource("5_ihbck")
+
+[node name="Gun1Main" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.2247066, 0.057342, -15.707199)
+mesh = ExtResource("6_vnsdt")
+
+[node name="Gun1Screen" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.290516, 0.01, -12.941471)
+mesh = ExtResource("7_ikqpi")
+
+[node name="Level1Catus2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.278549, 0, -20.62673)
+mesh = ExtResource("4_sp04v")
+
+[node name="Level1Catus3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06802988, 1, -27.026703)
+mesh = ExtResource("8_5luka")
+
+[node name="Level1Entity1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.271021, 2.363063, -16.468445)
+mesh = ExtResource("9_yu8cv")
+
+[node name="Level1Entity2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.662195, 0.699997, -16.27026)
+mesh = ExtResource("10_ibnub")
+
+[node name="Level1Entity3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.654522, 2.357636, -15.778602)
+mesh = ExtResource("11_5wboo")
+
+[node name="Level1Ribs" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.9168999, 0, -0.39911717, 0, 1, 0, 0.39911717, 0, 0.9168999, -9.322611, 1, 25.230759)
+mesh = ExtResource("12_6de02")
+
+[node name="Level1Shrub" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.093393, 1, 19.106253)
+mesh = ExtResource("13_cybgu")
+
+[node name="Level1Skull" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.92207944, 0, 0.38700065, 0, 1, 0, -0.38700065, 0, 0.92207944, 11.75483, 1, 36.651684)
+mesh = ExtResource("14_wdxbp")
+
+[node name="Projectile1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9086685, 0.122851, -1.8404007)
+mesh = ExtResource("15_on6n6")
